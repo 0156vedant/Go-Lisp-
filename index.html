@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Go Lisp</title>
+
+  <!-- CSS and Fonts -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" rel="stylesheet">
+  <style>
+    /* General Styling */
+    body {
+      background-color: var(--background-color);
+      color: var(--text-color);
+      font-family: 'Roboto', sans-serif;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Theme Variables */
+    :root {
+      --background-color: #f0f2f5;
+      --text-color: #333;
+      --primary-color: #6a11cb;
+      --secondary-color: #2575fc;
+      --editor-bg: #2d3436;
+      --editor-text: #dfe6e9;
+      --output-bg: #f0f0f0;
+      --output-text: #333;
+    }
+
+    /* Dark Theme Variables */
+    .dark-theme {
+      --background-color: #1e1e1e;
+      --text-color: #ffffff;
+      --primary-color: #3a3a3a;
+      --secondary-color: #6a11cb;
+      --editor-bg: #121212;
+      --editor-text: #e0e0e0;
+      --output-bg: #333;
+      --output-text: #e0e0e0;
+    }
+
+    /* Navbar Styling */
+    nav {
+      width: 100%;
+      background: var(--primary-color);
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+    }
+
+    .brand-logo-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-logo {
+      color: white;
+      font-size: 1.5em;
+      font-weight: bold;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .brand-logo img {
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .header-actions a, .header-actions button {
+      margin-left: 15px;
+      color: white;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+    }
+
+    .header-actions .material-icons {
+      font-size: 1.5em;
+      vertical-align: middle;
+    }
+
+    /* Short Note Styling */
+    .short-note {
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #e3e3e3;
+      color: #555;
+      text-align: center;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+
+    /* Button Container */
+    .button-container {
+      display: flex;
+      justify-content: flex-start;
+      gap: 15px;
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 10px;
+    }
+
+    .button-container button {
+      padding: 8px 15px;
+      background-color: var(--primary-color);
+      color: white;
+      font-size: 1em;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .button-container button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* Compiler and Output Styling */
+    .compiler-container {
+      display: flex;
+      width: 90%;
+      max-width: 1200px;
+      margin-top: 10px;
+      height: 500px;
+    }
+
+    .editor-box {
+      flex: 7;
+      background-color: var(--editor-bg);
+      color: var(--editor-text);
+      padding: 20px;
+      border-radius: 10px 0 0 10px;
+      font-family: monospace;
+      font-size: 1.1em;
+      overflow-y: scroll;
+      height: 100%;
+      outline: none;
+      white-space: pre-wrap;
+    }
+
+    .output {
+      flex: 3;
+      background-color: var(--output-bg);
+      color: var(--output-text);
+      padding: 20px;
+      border-radius: 0 10px 10px 0;
+      margin-left: -1px;
+      font-family: monospace;
+      overflow-y: scroll;
+      height: 100%;
+      white-space: pre-wrap;
+    }
+
+    /* Footer Styling */
+    footer {
+      background: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navbar -->
+  <nav>
+    <!-- Left Side: Logo -->
+    <div class="brand-logo-container">
+      <a href="#" class="brand-logo">
+        <img src="lisp_logo.png" alt="Lisp Logo">
+        Go Lisp
+      </a>
+    </div>
+
+    <!-- Right Side: Actions -->
+    <div class="header-actions">
+      <a href="https://lisp-lang.org/learn" target="_blank">Learn</a>
+      <button onclick="showAboutUs()">About Us</button>
+      <button onclick="toggleTheme()">
+        <i class="material-icons">brightness_6</i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Short Note -->
+  <div class="short-note">
+    This is a common Lisp interpreter. Please note it may not support all interpreter functionalities.
+  </div>
+
+  <!-- Run and Clear Buttons -->
+  <div class="button-container">
+    <button onclick="runCode()">Run</button>
+    <button onclick="clearCode()">Clear</button>
+  </div>
+
+  <!-- Main Section -->
+  <div class="compiler-container">
+    <div id="code" class="editor-box" contenteditable="true" aria-label="Lisp Code Editor">
+      <span class="placeholder">Type your Lisp code here...</span>
+    </div>
+    <div id="output" class="output">
+      <!-- Output will be displayed here -->
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <p>Created by Team ABBS In Guidance Of Prof-J.S.Patil</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    // Theme Toggle
+    function toggleTheme() {
+      document.body.classList.toggle('dark-theme');
+    }
+
+    // Show About Us
+    function showAboutUs() {
+      alert('Team Members:\nVedant Sonawane\nSarthak Sonawane\nJayesh Jain\nVirabhadra Malipatil\nVijay Patwari');
+    }
+
+    // Run Code Function
+   // Run Code Function
+// Run Code Function
+function runCode() {
+    const output = document.getElementById("output");
+    const code = document.getElementById("code").innerText.trim();
+
+    // Clear previous output completely to prevent duplicate entries
+    output.innerHTML = "";
+
+    if (code) {
+        output.innerHTML = '<div class="loader"></div>';  // Display loading animation
+
+        // Send Lisp code to the FastAPI backend
+        fetch("http://127.0.0.1:5001/run_code", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ code })
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Replace loading animation with output once response is received
+            output.innerHTML = ""; // Clear loader
+
+            if (data.output) {
+                // Display the output without doubling
+                output.innerHTML = `>>> ${data.output}`;
+            } else {
+                output.innerHTML = `Error: ${data.detail}`;
+            }
+        })
+        .catch(error => {
+            output.innerHTML = "Error: " + error.message;
+        });
+    } else {
+        output.innerHTML = "Please enter some Lisp code.";
+    }
+}
+
+
+    // Clear Code Function
+    function clearCode() {
+      document.getElementById('code').innerText = '';
+      document.getElementById('output').innerText = '';
+    }
+  </script>
+</body>
+</html>
