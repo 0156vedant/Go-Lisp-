@@ -259,13 +259,14 @@ function runCode() {
         output.innerHTML = '<div class="loader"></div>';  // Display loading animation
 
         // Send Lisp code to the FastAPI backend
-        fetch("http://127.0.0.1:5001/run_code", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ code })
-        })
+        fetch("https://lisp-backend.onrender.com/run_code", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ code })
+})
+
         .then(response => response.json())
         .then(data => {
             // Replace loading animation with output once response is received
