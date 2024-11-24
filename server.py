@@ -5,21 +5,21 @@ import subprocess
 
 app = FastAPI()
 
-# Add CORS Middleware
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Set to your frontend URL for better security
+    allow_origins=["https://0156vedant.github.io"],  # Allow specific frontend domain
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 class Code(BaseModel):
     code: str
 
 @app.post("/run_code")
 async def run_code(code: Code):
-    # Execute the C++ interpreter with Lisp code
     process = subprocess.Popen(
         ['./wisp_interpreter'],
         stdin=subprocess.PIPE,
