@@ -21,7 +21,7 @@ Deployed the backend on Render with a build command to compile the C++ file and 
 
 Hosting Frontend:
 Hosted the frontend (index.html) on GitHub Pages.
-Updated the API endpoint in the frontend to point to the Render-deployed backend.
+Updated the API endpoint in the frontend to point to the Render-deployed backend. 
 
 CORS Configuration:
 Configured CORS in the backend to allow requests from the frontend domain (https://0156vedant.github.io).
