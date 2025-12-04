@@ -10,3 +10,5 @@ echo Starting FastAPI server...
 start cmd /c "uvicorn server:app --host 127.0.0.1 --port 5001"
 echo Server started at http://127.0.0.1:5001
 pause
+
+//dfghjkl
