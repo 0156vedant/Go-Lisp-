@@ -21,3 +21,4 @@ EXPOSE 5001
 
 # Start the FastAPI server
 CMD ["sh", "-c", "./wisp_interpreter && uvicorn server:app --host 0.0.0.0 --port 5001"]
+
