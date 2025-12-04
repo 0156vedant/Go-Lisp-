@@ -32,3 +32,4 @@ async def run_code(code: Code):
     if process.returncode != 0:
         raise HTTPException(status_code=400, detail=stderr)
     return {"output": stdout}
+
